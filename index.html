@@ -13,9 +13,7 @@
 
     <script>
       // Fetch event data from the webcal URL
-      fetch(
-        'https://cors-anywhere.herokuapp.com/webcal://standrewspolaris.org/?post_type=tribe_events&tribe-bar-date=2023-03-26&ical=1&eventDisplay=list'
-      )
+      fetch('webcal://standrewspolaris.org/?post_type=tribe_events&tribe-bar-date=2023-03-26&ical=1&eventDisplay=list')
         .then((response) => response.text())
         .then((data) => {
           // Parse event data using regular expressions
