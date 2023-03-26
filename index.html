@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Church Event Display</title>
+    <style>
+      /* Add your custom CSS styles here */
+    </style>
+  </head>
+  <body>
+    <h1>Upcoming Events</h1>
+    <div id="event-list"></div>
+
+    <script>
+      // Fetch event data from the webcal URL
+      fetch(
+        'https://cors-anywhere.herokuapp.com/webcal://standrewspolaris.org/?post_type=tribe_events&tribe-bar-date=2023-03-26&ical=1&eventDisplay=list'
+      )
+        .then((response) => response.text())
+        .then((data) => {
+          // Parse event data using regular expressions
+          const eventsData = data
+            .split('BEGIN:VEVENT')
+            .slice(1)
+            .map((event) => {
+              const name = event.match(/SUMMARY:(.*)/)[1].trim();
+              const date = event.match(/DTSTART.*:(.*)/)[1].trim();
+              const location = event.match(/LOCATION:(.*)/)[1].trim();
+              return { name, date, location };
+            });
+
+          // Render event data to the DOM
+          const eventList = document.getElementById('event-list');
+          eventsData.forEach((event) => {
+            const eventContainer = document.createElement('div');
+            eventContainer.classList.add('event');
+
+            const nameElement = document.createElement('h2');
+            nameElement.textContent = event.name;
+            eventContainer.appendChild(nameElement);
+
+            const dateElement = document.createElement('p');
+            dateElement.textContent = `Date: ${event.date}`;
+            eventContainer.appendChild(dateElement);
+
+            const locationElement = document.createElement('p');
+            locationElement.textContent = `Location: ${event.location}`;
+            eventContainer.appendChild(locationElement);
+
+            eventList.appendChild(eventContainer);
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    </script>
+  </body>
+</html>
