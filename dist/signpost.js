@@ -1,7 +1,7 @@
 const calendarUrl = 'https://standrewspolaris.org/events/month/?ical=1';
-// const currentDate = new Date();
+const currentDate = new Date();
 // create a date object for  April 3 6:30 pm
-const currentDate = new Date(2023, 3, 3, 1, 30, 0, 0);
+// const currentDate = new Date(2023, 3, 3, 1, 30, 0, 0);
 
 fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
   .then(response => response.text())
