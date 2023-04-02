@@ -6,72 +6,14 @@
     <style>
       /* Add your custom CSS styles here */
     </style>
-    <script src="https://unpkg.com/ical.js"></script>
+    <script src="/ical.js"></script>
   </head>
   <body>
     <h1>Today's Events</h1>
     <div id="event-list"></div>
 
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        // Fetch event data from the webcal URL
-        const icalUrl =
-          'https://standrewspolaris.org/?post_type=tribe_events&tribe-bar-date=2023-03-26&ical=1&eventDisplay=list';
-        fetch(icalUrl)
-          .then((response) => response.text())
-          .then((data) => {
-            // Parse iCal data using ical.js
-            const eventsData = ICAL.parse(data);
-
-            // Get an array of today's events
-            const now = new Date();
-            const startOfDay = new Date(
-              now.getFullYear(),
-              now.getMonth(),
-              now.getDate(),
-              0,
-              0,
-              0
-            );
-            const endOfDay = new Date(
-              now.getFullYear(),
-              now.getMonth(),
-              now.getDate(),
-              23,
-              59,
-              59
-            );
-            const todaysEvents = Object.values(eventsData).filter((event) => {
-              const eventDate = event.startDate ? event.startDate.toJSDate() : null;
-              return eventDate && eventDate >= startOfDay && eventDate <= endOfDay;
-            });
-
-            // Render event data to the DOM
-            const eventList = document.getElementById('event-list');
-            todaysEvents.forEach((event) => {
-              const eventContainer = document.createElement('div');
-              eventContainer.classList.add('event');
-
-              const nameElement = document.createElement('h2');
-              nameElement.textContent = event.summary;
-              eventContainer.appendChild(nameElement);
-
-              const dateElement = document.createElement('p');
-              const eventDate = event.startDate ? event.startDate.toJSDate().toLocaleString() : null;
-              dateElement.textContent = `Date: ${eventDate}`;
-              eventContainer.appendChild(dateElement);
-
-              const locationElement = document.createElement('p');
-              locationElement.textContent = `Location: ${event.location}`;
-              eventContainer.appendChild(locationElement);
-
-              eventList.appendChild(eventContainer);
-            });
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
+      
     </script>
   </body>
 </html>
