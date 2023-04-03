@@ -15,7 +15,6 @@ fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
       const start = event.startDate.toJSDate();
       const end = event.endDate.toJSDate();
       
-      // if (true) {
       if (start.getDate() === currentDate.getDate() &&
           start.getMonth() === currentDate.getMonth() &&
           start.getFullYear() === currentDate.getFullYear() &&
@@ -34,6 +33,19 @@ fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
       }
     }).filter(event => event !== null);
 
-    console.log(events);
+    const eventListDiv = document.getElementById('event-list');
+    events.forEach(event => {
+      const eventDiv = document.createElement('div');
+      const summaryHeading = document.createElement('h2');
+      summaryHeading.textContent = event.summary;
+      const timesList = document.createElement('ul');
+      const timesItem = document.createElement('li');
+      timesItem.textContent = `${event.start.toLocaleTimeString()} - ${event.end.toLocaleTimeString()}`;
+      timesList.appendChild(timesItem);
+      eventDiv.appendChild(summaryHeading);
+      eventDiv.appendChild(timesList);
+      eventListDiv.appendChild(eventDiv);
+    });
+    
   })
   .catch(error => console.error(error));
