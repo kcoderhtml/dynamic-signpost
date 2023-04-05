@@ -1,7 +1,12 @@
 const calendarUrl = "https://standrewspolaris.org/events/month/?ical=1";
-const currentDate = new Date();
-// create a date object for  April 3 6:30 pm
-// const currentDate = new Date(2023, 3, 3, 1, 30, 0, 0);
+// const currentDate = new Date();
+// create a new date object for Sat Dec 01 2018 17:00:00
+const currentDate = new Date(2018, 11, 1, 17, 0, 0);
+
+const locationDict = {
+	"sda": "arrow-straight",
+	"Sanctuary": "arrow-right"
+}
 
 fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
 	.then((response) => response.text())
@@ -13,6 +18,7 @@ fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
 		const events = vevents
 			.map((vevent) => {
 				const event = new ICAL.Event(vevent);
+				console.log(event.location);
 				const start = event.startDate.toJSDate();
 				const end = event.endDate.toJSDate();
 
@@ -30,6 +36,7 @@ fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
 						description: event.description,
 						start: start,
 						end: end,
+						location: event.location,
 					};
 				} else {
 					return null;
@@ -37,18 +44,29 @@ fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
 			})
 			.filter((event) => event !== null);
 
-		const eventListDiv = document.getElementById("event-list");
-		events.forEach((event) => {
-			const eventDiv = document.createElement("div");
-			const summaryHeading = document.createElement("h2");
-			summaryHeading.textContent = event.summary;
-			const timesList = document.createElement("ul");
-			const timesItem = document.createElement("li");
-			timesItem.textContent = `${event.start.toLocaleTimeString()} - ${event.end.toLocaleTimeString()}`;
-			timesList.appendChild(timesItem);
-			eventDiv.appendChild(summaryHeading);
-			eventDiv.appendChild(timesList);
-			eventListDiv.appendChild(eventDiv);
-		});
+		const eventTable = document.getElementById("event-table");
+		const tbody = eventTable.querySelector("tbody");
+
+		events.forEach(event => {
+			const row = tbody.insertRow();
+		  
+			const summaryCell = row.insertCell();
+			summaryCell.textContent = event.summary;
+		  
+			const timeCell = row.insertCell();
+			const timeFormat = new Intl.DateTimeFormat('en-US', { timeStyle: 'short' });
+			const startTimeString = timeFormat.format(event.start);
+			const endTimeString = timeFormat.format(event.end);
+			timeCell.textContent = `${startTimeString} - ${endTimeString}`;
+		  
+			const locationCell = row.insertCell();
+			const direction = Object.keys(locationDict).some(key => event.location.includes(key)) ? locationDict[event.location] : 'arrow-straight';
+			console.log(direction);
+			const arrow = document.createElement('span');
+			arrow.classList.add('arrow');
+			arrow.classList.add(direction);
+			locationCell.appendChild(arrow);
+			locationCell.appendChild(document.createTextNode(event.location || 'TBD'));
+		  });
 	})
 	.catch((error) => console.error(error));

@@ -1,19 +1,54 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Church Event Display</title>
+    <style>
+      /* Add your custom CSS styles here */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Church Event Display</title>
-  <style>
-    /* Add your custom CSS styles here */
-  </style>
-  <script src="/ical.js"></script>
-  <script src="/signpost.js"></script>
-</head>
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
 
-<body>
-  <h1>Today's Events</h1>
-  <div id="event-list"></div>
-</body>
+      .arrow {
+        display: inline-block;
+        width: 20px;
+        text-align: center;
+      }
 
+      .arrow-right:before {
+        content: "→";
+      }
+
+      .arrow-left:before {
+        content: "←";
+      }
+
+      .arrow-straight:before {
+        content: "↑";
+      }
+    </style>
+    <script src="/ical.js"></script>
+    <script src="/signpost.js"></script>
+  </head>
+  <body>
+    <h1>Today's Events</h1>
+    <table id="event-table">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Time</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </body>
 </html>
