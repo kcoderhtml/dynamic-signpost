@@ -1,0 +1,33 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.arrow {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+}
+
+.arrow-right:before {
+  content: "→";
+}
+
+.arrow-left:before {
+  content: "←";
+}
+
+.arrow-straight:before {
+  content: "↑";
+}
+
+.parish-house:before {
+  content: "";
+}
