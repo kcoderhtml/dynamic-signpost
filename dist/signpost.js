@@ -1,5 +1,5 @@
 const calendarUrl = "https://standrewspolaris.org/events/month/?ical=1";
-// const currentDate = new Date();
+// const currentDate = new Date(); // TODO: uncomment this line and comment below line to enable date filtering
 // create a new date object for Sat Dec 01 2018 17:00:00
 const currentDate = new Date(2018, 11, 1, 17, 0, 0);
 
@@ -24,7 +24,7 @@ fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
         const end = event.endDate.toJSDate();
 
         if (
-			true
+			true // TODO: Remove this line to enable date filtering
         //   start.getDate() === currentDate.getDate() &&
         //   start.getMonth() === currentDate.getMonth() &&
         //   start.getFullYear() === currentDate.getFullYear() &&
@@ -66,7 +66,6 @@ fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
 		let direction = null;
 
 		Object.keys(locationDict).forEach(key => {
-			// console.log(`Testing key ${key} against event location ${event.location}`);
 			if (event.location.includes(key)) {
 			  direction = locationDict[key];
 			  console.log(`Direction for location ${event.location}: ${direction}`);
