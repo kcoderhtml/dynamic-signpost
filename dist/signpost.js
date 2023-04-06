@@ -1,7 +1,7 @@
 const calendarUrl = "https://standrewspolaris.org/events/month/?ical=1";
-// const currentDate = new Date(); // TODO: uncomment this line and comment below line to enable date filtering
+const currentDate = new Date(); // TODO: uncomment this line and comment below line to enable date filtering
 // create a new date object for Sat Dec 01 2018 17:00:00
-const currentDate = new Date(2018, 11, 1, 17, 0, 0);
+// const currentDate = new Date(2018, 11, 1, 17, 0, 0);
 
 const locationDict = {
 	"Sanctuary": "arrow-straight",
@@ -25,18 +25,17 @@ fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
 		const events = vevents
 			.map((vevent) => {
 				const event = new ICAL.Event(vevent);
-				// console.log(event.location);
 				const start = event.startDate.toJSDate();
 				const end = event.endDate.toJSDate();
 
 				if (
-					true // TODO: Remove this line to enable date filtering
-					//   start.getDate() === currentDate.getDate() &&
-					//   start.getMonth() === currentDate.getMonth() &&
-					//   start.getFullYear() === currentDate.getFullYear() &&
-					//   end.getDate() === currentDate.getDate() &&
-					//   end.getMonth() === currentDate.getMonth() &&
-					//   end.getFullYear() === currentDate.getFullYear()
+					// true // TODO: Remove this line to enable date filtering
+					  start.getDate() === currentDate.getDate() &&
+					  start.getMonth() === currentDate.getMonth() &&
+					  start.getFullYear() === currentDate.getFullYear() &&
+					  end.getDate() === currentDate.getDate() &&
+					  end.getMonth() === currentDate.getMonth() &&
+					  end.getFullYear() === currentDate.getFullYear()
 				) {
 					return {
 						summary: event.summary,
@@ -62,7 +61,7 @@ fetch(`/.netlify/functions/node-fetch?url=${encodeURIComponent(calendarUrl)}`)
 				if (event.location.includes(key)) {
 					direction = locationDict[key];
 				}
-				console.log(`Direction for location ${event.location}: ${direction}`);
+				// console.log(`Direction for location ${event.location}: ${direction}`);
 			});
 
 			if (direction !== null) {
