@@ -1,4 +1,4 @@
-const calendarUrl = "https://standrewspolaris.org/events/month/?ical=1";
+const calendarUrl = "https://standrews.onechurchsoftware.com/api/calendars/feed/CVXxebAmvU5PJQWp4H4WrHywwZHCxjmSk7Rg==G8Mcb69ub1EDkK8adgGCPY+/jkNV5uaCLnaK0Cb6zQQ==t7aqLeA2Q70Mr1";
 const currentDate = new Date(); // TODO: uncomment this line and comment below line to enable date filtering
 // create a new date object for Sat Dec 01 2018 17:00:00
 // const currentDate = new Date(2018, 11, 1, 17, 0, 0);
